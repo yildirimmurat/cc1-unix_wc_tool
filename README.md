@@ -18,7 +18,10 @@ Add shebang line at the beginning of ccwc script
 java -jar /path/to/UnixWC.jar "$@"
 ```
 
-Usage:
+Example Usage:
 ```
 ccwc test.txt
+ccwc test.txt -l
+cat test.txt | ccwc
+curl https://www.gutenberg.org/cache/epub/71831/pg71831.txt | ccwc -l
 ```
