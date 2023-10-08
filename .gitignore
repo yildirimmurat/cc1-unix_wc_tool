@@ -33,3 +33,5 @@ bin/
 test.txt
 
 *.iml
+*.class
+*.jar

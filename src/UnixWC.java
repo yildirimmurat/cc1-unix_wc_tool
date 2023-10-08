@@ -2,39 +2,31 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
 public class UnixWC {
-    private static final String COMMAND_PREFIX = "ccwc";
-
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            System.out.print("$ ");
-            String input = scanner.nextLine();
-
-            if (input.equals("exit")) {
-                break;
-            }
-
-            processCommand(input);
-        }
-
-        scanner.close();
-    }
-
-    private static void processCommand(String input) {
-        String[] parts = input.split(" ");
-
-        if (parts.length > 3 || parts.length < 2 || !parts[0].equals(COMMAND_PREFIX)) {
-            System.err.println("Invalid command: " + input);
+        if (args.length > 2 || args.length < 1) {
+            System.err.println("Invalid command: " + Arrays.toString(args));
             return;
         }
 
-        String option = parts.length > 2 ? parts[1] : "";
-        String fileName = parts[parts.length - 1];
+        String option = "";
+        String fileName;
+
+        if (args.length == 2) {
+            option = args[0];
+            fileName = args[1];
+        } else {
+            fileName = args[0];
+        }
+
+        processCommand(option, fileName);
+    }
+
+    private static void processCommand(String option, String fileName) {
         File file = new File(fileName);
 
         if (!file.exists() || !file.isFile()) {
